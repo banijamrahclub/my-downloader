@@ -29,14 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.success) {
                 showResult(data);
-                alert('تم جلب الرابط بنجاح من محركك السحابي!');
+                alert('تم جلب الرابط بنجاح!');
             } else {
-                throw new Error(data.error);
+                throw new Error(data.error || 'خطأ غير معروف من السيرفر');
             }
 
         } catch (error) {
             console.error('Download Error:', error);
-            alert('حدث خطأ في الاتصال بسيرفر Render. تأكد من رفعه بشكل صحيح وتغيير الرابط في ملف app.js');
+            alert(`خطأ في الاتصال: ${error.message}\nتأكد أنك تفتح الموقع من رابط Render وليس كملف من جهازك.`);
         } finally {
             setLoading(false);
         }
