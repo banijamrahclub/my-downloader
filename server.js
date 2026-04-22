@@ -8,14 +8,20 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// عرض سجلات الطلبات في Render لرؤية الأخطاء
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
+
 // جعل السيرفر يعرض ملفات الموقع (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, './')));
 
 // دالة لتشغيل أمر yt-dlp وجلب البيانات
 const getMediaInfo = (url) => {
     return new Promise((resolve, reject) => {
-        // استخدام المسار المحلي لـ yt-dlp إذا تم تحميله في المجلد الحالي
-        const command = `yt-dlp -j --no-playlist "${url}"`;
+        // نستخدم ./yt-dlp للإشارة للملف المحمل في نفس المجلد
+        const command = `./yt-dlp -j --no-playlist "${url}"`;
         
         exec(command, (error, stdout, stderr) => {
             if (error) {
