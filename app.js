@@ -36,7 +36,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Download Error:', error);
-            alert(`خطأ في الاتصال: ${error.message}\nتأكد أنك تفتح الموقع من رابط Render وليس كملف من جهازك.`);
+            const errorMsg = error.message || error;
+            alert(`حدث خطأ! انظر إلى أسفل الصفحة لمشاهدة التفاصيل.`);
+            
+            // إنشاء صندوق لعرض الخطأ الطويل إذا لم يكن موجوداً
+            let errorBox = document.getElementById('errorBox');
+            if (!errorBox) {
+                errorBox = document.createElement('textarea');
+                errorBox.id = 'errorBox';
+                errorBox.style = 'width:100%; height:200px; margin-top:20px; background:#1e293b; color:#ef4444; padding:10px; border-radius:10px; border:1px solid #ef4444; direction:ltr; text-align:left;';
+                resultSection.parentElement.appendChild(errorBox);
+            }
+            errorBox.value = `Error Details:\n${errorMsg}`;
+            errorBox.style.display = 'block';
+            errorBox.scrollIntoView({ behavior: 'smooth' });
         } finally {
             setLoading(false);
         }
