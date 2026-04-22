@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultPreview = document.getElementById('resultPreview');
 
     // رابط سيرفر Render الخاص بك (قم بتغييره بعد الرفع على Render)
-    const RENDER_SERVER_URL = 'https://your-app-name.onrender.com';
+    const RENDER_SERVER_URL = 'https://my-downloader-2i1g.onrender.com/';
 
     if (window.lucide) lucide.createIcons();
 
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hdDownload.onclick = async (e) => {
             e.preventDefault();
             hdDownload.textContent = 'جاري التحميل...';
-            
+
             try {
                 const res = await fetch(data.url);
                 const blob = await res.blob();
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hdDownload.textContent = 'تحميل الفيديو الآن';
             }
         };
-        
+
         hdDownload.textContent = 'تحميل الفيديو الآن (HD)';
     }
 
