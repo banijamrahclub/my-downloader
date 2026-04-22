@@ -6,10 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const hdDownload = document.getElementById('hdDownload');
     const resultPreview = document.getElementById('resultPreview');
 
-    // سيقوم الموقع بالتعرف على السيرفر تلقائياً
-    const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
-        ? 'https://my-downloader-2i1g.onrender.com' // ضع رابطك هنا للعمل محلياً
-        : ''; // عند الرفع على ريندر سيعرف نفسه تلقائياً
+    // سنستخدم مفتاحك الخاص مع أقوى API متاح حالياً لتجاوز الحظر
+    const RAPID_API_KEY = 'cc320dc747msh9b89da69c13d6d8p103876jsn618b2aa88e0d';
+    const RAPID_API_HOST = 'social-media-video-downloader.p.rapidapi.com';
 
     if (window.lucide) lucide.createIcons();
 
@@ -23,42 +22,52 @@ document.addEventListener('DOMContentLoaded', () => {
         setLoading(true);
 
         try {
-            // الاتصال بمحركك الخاص (سحابياً أو محلياً)
-            const response = await fetch(`${API_BASE_URL}/api/download?url=${encodeURIComponent(url)}`);
-            const data = await response.json();
+            // استخدام الـ API السحابي القوي
+            const response = await fetch(`https://${RAPID_API_HOST}/smvd/get/all?url=${encodeURIComponent(url)}`, {
+                headers: {
+                    'x-rapidapi-key': RAPID_API_KEY,
+                    'x-rapidapi-host': RAPID_API_HOST
+                }
+            });
 
-            if (data.success) {
-                showResult(data);
-                alert('تم جلب الرابط بنجاح!');
+            const data = await response.json();
+            console.log('API Response:', data);
+
+            if (data && data.links && data.links.length > 0) {
+                // العثور على أفضل جودة (تيك توك بدون علامة مائية أو يوتيوب HD)
+                const bestLink = data.links.find(l => l.quality === 'hd' || l.quality === 'original') || data.links[0];
+                showResult(data, bestLink.link);
+                alert('تم تجاوز الحظر وجلب الرابط بنجاح!');
             } else {
-                throw new Error(data.error || 'خطأ غير معروف من السيرفر');
+                throw new Error('الرابط غير مدعوم أو غير متاح حالياً');
             }
 
         } catch (error) {
             console.error('Download Error:', error);
-            // تقصير الرسالة لتظهر كاملة في التنبيه
-            const shortError = error.message ? error.message.substring(0, 200) : 'خطأ غير معروف';
-            alert(`فشل التحميل!\nالسبب: ${shortError}\n\nتأكد من تحديث صفحة ريندر والانتظار دقيقة.`);
+            alert(`فشل التحميل عبر السحابة: ${error.message}`);
         } finally {
             setLoading(false);
         }
     };
 
-    function showResult(data) {
+    function showResult(data, finalUrl) {
         resultSection.style.display = 'block';
         resultSection.scrollIntoView({ behavior: 'smooth' });
 
+        const thumb = data.picture || data.thumbnail || 'https://via.placeholder.com/400x225/6366f1/ffffff?text=Video+Ready';
+
         resultPreview.innerHTML = `
-            <img src="${data.thumbnail}" alt="preview" style="width:100%; height:100%; object-fit:cover; border-radius:15px;">
-            <div style="position:absolute; bottom:10px; left:10px; background:var(--primary); color:white; padding:4px 8px; border-radius:5px; font-weight:bold; font-size:12px;">HD Ready</div>
+            <img src="${thumb}" alt="preview" style="width:100%; height:100%; object-fit:cover; border-radius:15px;">
+            <div style="position:absolute; bottom:10px; left:10px; background:#00f2ea; color:#000; padding:4px 8px; border-radius:5px; font-weight:bold; font-size:12px;">Premium Link</div>
         `;
 
         hdDownload.onclick = async (e) => {
             e.preventDefault();
-            hdDownload.textContent = 'جاري التحميل...';
-
+            hdDownload.textContent = 'جاري التحميل المباشر...';
+            
             try {
-                const res = await fetch(data.url);
+                // محاولة التحميل القسري عبر Blob
+                const res = await fetch(finalUrl);
                 const blob = await res.blob();
                 const bUrl = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -69,11 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 a.remove();
                 hdDownload.textContent = 'تم التحميل!';
             } catch (err) {
-                window.open(data.url, '_blank');
+                // حل بديل إذا كان السيرفر يمنع الـ CORS
+                window.open(finalUrl, '_blank');
                 hdDownload.textContent = 'تحميل الفيديو الآن';
             }
         };
-
+        
         hdDownload.textContent = 'تحميل الفيديو الآن (HD)';
     }
 
@@ -81,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!downloadBtn) return;
         const btnText = downloadBtn.querySelector('.btn-text');
         if (isLoading) {
-            btnText.textContent = 'جاري المعالجة...';
+            btnText.textContent = 'جاري سحب المقطع...';
             loader.style.display = 'block';
             downloadBtn.disabled = true;
         } else {
