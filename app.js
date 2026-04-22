@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const hdDownload = document.getElementById('hdDownload');
     const resultPreview = document.getElementById('resultPreview');
 
-    // رابط سيرفر Render الخاص بك (قم بتغييره بعد الرفع على Render)
-    const RENDER_SERVER_URL = 'https://my-downloader-2i1g.onrender.com/';
+    // سيقوم الموقع بالتعرف على السيرفر تلقائياً
+    const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
+        ? 'https://my-downloader-2i1g.onrender.com' // ضع رابطك هنا للعمل محلياً
+        : ''; // عند الرفع على ريندر سيعرف نفسه تلقائياً
 
     if (window.lucide) lucide.createIcons();
 
@@ -21,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setLoading(true);
 
         try {
-            // الاتصال بمحركك الخاص في Render
-            const response = await fetch(`${RENDER_SERVER_URL}/api/download?url=${encodeURIComponent(url)}`);
+            // الاتصال بمحركك الخاص (سحابياً أو محلياً)
+            const response = await fetch(`${API_BASE_URL}/api/download?url=${encodeURIComponent(url)}`);
             const data = await response.json();
 
             if (data.success) {
