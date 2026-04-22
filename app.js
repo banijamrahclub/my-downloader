@@ -36,20 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Download Error:', error);
-            const errorMsg = error.message || error;
-            alert(`حدث خطأ! انظر إلى أسفل الصفحة لمشاهدة التفاصيل.`);
-            
-            // إنشاء صندوق لعرض الخطأ الطويل إذا لم يكن موجوداً
-            let errorBox = document.getElementById('errorBox');
-            if (!errorBox) {
-                errorBox = document.createElement('textarea');
-                errorBox.id = 'errorBox';
-                errorBox.style = 'width:100%; height:200px; margin-top:20px; background:#1e293b; color:#ef4444; padding:10px; border-radius:10px; border:1px solid #ef4444; direction:ltr; text-align:left;';
-                resultSection.parentElement.appendChild(errorBox);
-            }
-            errorBox.value = `Error Details:\n${errorMsg}`;
-            errorBox.style.display = 'block';
-            errorBox.scrollIntoView({ behavior: 'smooth' });
+            // تقصير الرسالة لتظهر كاملة في التنبيه
+            const shortError = error.message ? error.message.substring(0, 200) : 'خطأ غير معروف';
+            alert(`فشل التحميل!\nالسبب: ${shortError}\n\nتأكد من تحديث صفحة ريندر والانتظار دقيقة.`);
         } finally {
             setLoading(false);
         }

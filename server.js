@@ -9,35 +9,40 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
-});
-
 app.use(express.static(path.join(__dirname, './')));
 
 const getMediaInfo = (url) => {
     return new Promise((resolve, reject) => {
         const ytdlpPath = path.join(__dirname, 'yt-dlp');
         
-        // التأكد من وجود الأداة أولاً
         if (!fs.existsSync(ytdlpPath)) {
-            return reject('أداة yt-dlp غير موجودة في السيرفر. تأكد من اكتمال الـ Build.');
+            return reject('yt-dlp binary missing. Wait for build to complete.');
         }
 
-        // تشغيل باستخدام python3 لضمان التوافق في Render
-        const command = `python3 ${ytdlpPath} -j --no-playlist "${url}"`;
+        // محاولة التشغيل المباشر أولاً (أكثر استقراراً في Render)
+        const command = `chmod +x ${ytdlpPath} && ${ytdlpPath} -j --no-playlist "${url}"`;
         
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                console.error('YT-DLP Error:', stderr);
-                return reject(`خطأ في الأداة: ${stderr || error.message}`);
+                // محاولة بديلة باستخدام python3 إذا فشل التشغيل المباشر
+                const altCommand = `python3 ${ytdlpPath} -j --no-playlist "${url}"`;
+                exec(altCommand, (err2, stdout2, stderr2) => {
+                    if (err2) {
+                        return reject(`Error: ${stderr2 || err2.message}`);
+                    }
+                    try {
+                        resolve(JSON.parse(stdout2));
+                    } catch (e) {
+                        reject('JSON Parse Error');
+                    }
+                });
+                return;
             }
             try {
                 const info = JSON.parse(stdout);
                 resolve(info);
             } catch (e) {
-                reject('فشل في تحليل بيانات المقطع (JSON Error)');
+                reject('JSON Parse Error');
             }
         });
     });
@@ -57,7 +62,6 @@ app.get('/api/download', async (req, res) => {
             duration: info.duration_string
         });
     } catch (err) {
-        // إرسال الخطأ الحقيقي للمتصفح لنعرف المشكلة
         res.status(500).json({ success: false, error: err.toString() });
     }
 });
