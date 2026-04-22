@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحميل من تيك توك بدون علامة مائية | فيديوهات، ريلز، وصورة بروفايل - VideoDownloader</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="أفضل أداة لتحميل مقاطع تيك توك بدون علامة مائية. حمل الفيديوهات، الصور، الريلز، والستوري بأعلى جودة. خدمة مجانية تدعم التحميل المباشر.">
+    <meta name="keywords" content="تحميل فيديوهات تيك توك, تيك توك بدون علامة مائية, تحميل صور تيك توك, تحميل بروفايل تيك توك, TikTok Downloader No Watermark">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-overlay"></div>
+    
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <i data-lucide="download-cloud" style="color:var(--primary);"></i>
+                <span style="color:white; font-size:1.4rem; font-weight:800;">Downloader<span style="color:var(--primary);">Pro</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <div class="nav-platforms">
+                    <a href="instagram.html" class="nav-p-item insta" title="Instagram"><i data-lucide="instagram"></i></a>
+                    <a href="tiktok.html" class="nav-p-item tiktok active" title="TikTok"><i data-lucide="music-2"></i></a>
+                    <a href="youtube.html" class="nav-p-item yt" title="YouTube"><i data-lucide="youtube"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section container">
+            <div class="hero-content">
+                <h1 class="animate-up"><i data-lucide="music-2" style="vertical-align: middle; margin-left: 10px;"></i>تحميل من <span>تيك توك</span></h1>
+                <p class="animate-up delay-1">حمل مقاطعك المفضلة من تيك توك والمقاطع الطويلة والقصيرة بدون علامة مائية وبأعلى جودة.</p>
+                
+                <div class="input-container animate-up delay-2">
+                    <div class="input-wrapper">
+                        <i data-lucide="link-2" class="url-icon"></i>
+                        <input type="text" id="videoUrl" placeholder="أدخل رابط فيديو تيك توك هنا...">
+                        <button id="downloadBtn">
+                            <span class="btn-text">تحميل</span>
+                            <i data-lucide="arrow-left" class="btn-icon"></i>
+                            <div class="loader" id="loader"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="platform-features animate-up delay-3">
+                    <div class="p-feature">
+                        <i data-lucide="droplets"></i>
+                        <span>بدون علامة مائية</span>
+                    </div>
+                    <div class="p-feature">
+                        <i data-lucide="video"></i>
+                        <span>فيديو HD</span>
+                    </div>
+                    <div class="p-feature">
+                        <i data-lucide="music"></i>
+                        <span>تحميل MP3</span>
+                    </div>
+                    <div class="p-feature">
+                        <i data-lucide="user-circle"></i>
+                        <span>صورة البروفايل</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="result" class="container result-section" style="display: none;">
+            <div class="result-card">
+                <div id="resultPreview" class="preview-box"></div>
+                <div class="result-info">
+                    <h3>جاهز للتحميل بدون علامة مائية!</h3>
+                    <div class="download-options">
+                        <a id="hdDownload" href="#" class="btn-primary" download>تحميل فيديو (HD)</a>
+                        <a id="mp3Download" href="#" class="btn-secondary">تحميل صوت (MP3)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="margin-top: 4rem;">
+        <div class="container footer-content">
+             <p>&copy; 2024 Downloader Pro - أفضل أداة تحميل من تيك توك.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

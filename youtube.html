@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحميل من يوتيوب | شورتس، فيديو، وصورة بروفايل - VideoDownloader</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="أفضل أداة لتحميل مقاطع يوتيوب وفيديوهات الشورتس (Shorts) وصور البروفايل والقنوات. خدمة سريعة ومجانية تدعم جودات متعددة.">
+    <meta name="keywords" content="تحميل فيديوهات يوتيوب, تحميل يوتيوب شورتس, تحميل بروفايل يوتيوب, YouTube Shorts Downloader, YouTube Video Download">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-overlay"></div>
+    
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <i data-lucide="download-cloud" style="color:var(--primary);"></i>
+                <span style="color:white; font-size:1.4rem; font-weight:800;">Downloader<span style="color:var(--primary);">Pro</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <div class="nav-platforms">
+                    <a href="instagram.html" class="nav-p-item insta" title="Instagram"><i data-lucide="instagram"></i></a>
+                    <a href="tiktok.html" class="nav-p-item tiktok" title="TikTok"><i data-lucide="music-2"></i></a>
+                    <a href="youtube.html" class="nav-p-item yt active" title="YouTube"><i data-lucide="youtube"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section container">
+            <div class="hero-content">
+                <h1 class="animate-up"><i data-lucide="youtube" style="vertical-align: middle; margin-left: 10px;"></i>تحميل من <span>يوتيوب</span></h1>
+                <p class="animate-up delay-1">حمل فيديوهات يوتيوب الطويلة والقصيرة (Shorts) وصور البروفايل بأعلى دقة متوفرة.</p>
+                
+                <div class="input-container animate-up delay-2">
+                    <div class="input-wrapper">
+                        <i data-lucide="link-2" class="url-icon"></i>
+                        <input type="text" id="videoUrl" placeholder="أدخل رابط فيديو يوتيوب أو شورتس هنا...">
+                        <button id="downloadBtn">
+                            <span class="btn-text">تحميل</span>
+                            <i data-lucide="arrow-left" class="btn-icon"></i>
+                            <div class="loader" id="loader"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="platform-features animate-up delay-3">
+                    <div class="p-feature">
+                        <i data-lucide="film"></i>
+                        <span>تحميل شورتس</span>
+                    </div>
+                    <div class="p-feature">
+                        <i data-lucide="monitor"></i>
+                        <span>فيديوهات 4K</span>
+                    </div>
+                    <div class="p-feature">
+                        <i data-lucide="music"></i>
+                        <span>تحميل MP3</span>
+                    </div>
+                    <div class="p-feature">
+                        <i data-lucide="user-circle"></i>
+                        <span>صورة البروفايل</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="result" class="container result-section" style="display: none;">
+            <div class="result-card">
+                <div id="resultPreview" class="preview-box"></div>
+                <div class="result-info">
+                    <h3>الفيديو جاهز للتحميل!</h3>
+                    <div class="download-options">
+                        <a id="hdDownload" href="#" class="btn-primary" download>تحميل مباشر (Original)</a>
+                        <a id="subDownload" href="#" class="btn-secondary">تحميل بجودة أقل</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="margin-top: 4rem;">
+        <div class="container footer-content">
+             <p>&copy; 2024 Downloader Pro - أفضل أداة تحميل من يوتيوب.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
